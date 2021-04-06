@@ -7,11 +7,11 @@ namespace Domain
     {
         public string DisplayName { get; set; }
         public bool IsActive { get; set; }
-        public int DepartmentId { get; set; }
+        public Guid DepartmentId { get; set; }
         public virtual Department Department { get; set; }
-        public int PositionId { get; set; }
+        public Guid PositionId { get; set; }
         public virtual Position Position { get; set; }
-        public int CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
         public virtual Company Company { get; set; }
     }
 }
