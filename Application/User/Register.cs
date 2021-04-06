@@ -1,16 +1,17 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Errors;
 using Application.Interfaces;
+using Application.Validators;
 using Domain;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-
 namespace Application.User
 {
     public class Register
@@ -21,6 +22,17 @@ namespace Application.User
             public string Email { get; set; }
             public string Password { get; set; }
             public string DisplayName { get; set; }
+        }
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.UserName).NotEmpty();
+                RuleFor(x => x.Email).NotEmpty().EmailAddress();
+                RuleFor(x => x.Password).Password();
+                RuleFor(x => x.DisplayName).NotEmpty();
+            }
         }
 
         public class Handler : IRequestHandler<Command, User>
