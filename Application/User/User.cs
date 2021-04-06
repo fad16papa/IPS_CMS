@@ -1,4 +1,4 @@
-namespace Application.AppUser
+namespace Application.User
 {
     public class User
     {
