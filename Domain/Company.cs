@@ -15,6 +15,6 @@ namespace Domain
         public string Description { get; set; }
         public DateTime DateCreated { get; set; }
         public bool IsEnable { get; set; }
-        public ICollection<AppUser> AppUser { get; set; }
+        public virtual ICollection<AppUser> AppUser { get; set; }
     }
 }
