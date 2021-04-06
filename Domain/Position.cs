@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -9,5 +10,6 @@ namespace Domain
         public string Deescription { get; set; }
         public DateTime DateCreated { get; set; }
         public bool IsEnable { get; set; }
+        public ICollection<AppUser> AppUser { get; set; }
     }
 }
