@@ -8,10 +8,10 @@ namespace Domain
         public string DisplayName { get; set; }
         public bool IsActive { get; set; }
         public int DepartmentId { get; set; }
-        public Department Department { get; set; }
+        public virtual Department Department { get; set; }
         public int PositionId { get; set; }
-        public Position Position { get; set; }
+        public virtual Position Position { get; set; }
         public int CompanyId { get; set; }
-        public Company Company { get; set; }
+        public virtual Company Company { get; set; }
     }
 }
