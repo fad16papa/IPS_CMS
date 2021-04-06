@@ -52,7 +52,7 @@ namespace IPS.CMS.API
             })
             .AddFluentValidation(cfg =>
             {
-               
+
             });
 
             services.AddControllersWithViews()
@@ -113,9 +113,12 @@ namespace IPS.CMS.API
             }
 
             app.UseHttpsRedirection();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
