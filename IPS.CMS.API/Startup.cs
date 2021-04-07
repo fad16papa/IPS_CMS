@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Application.Companies;
 using Application.Departments;
 using Application.Interfaces;
+using Application.Positions;
 using AutoMapper;
 using Domain;
 using FluentValidation.AspNetCore;
@@ -52,6 +53,8 @@ namespace IPS.CMS.API
             services.AddAutoMapper(typeof(ListCompany.Handler));
             services.AddMediatR(typeof(ListDeprtment.Handler).Assembly);
             services.AddAutoMapper(typeof(ListDeprtment.Handler));
+            services.AddMediatR(typeof(ListPosition.Handler).Assembly);
+            services.AddAutoMapper(typeof(ListPosition.Handler));
 
             services.AddSignalR();
             services.AddControllers(opt =>
@@ -63,6 +66,7 @@ namespace IPS.CMS.API
             {
                 cfg.RegisterValidatorsFromAssemblyContaining<CreateCompany>();
                 cfg.RegisterValidatorsFromAssemblyContaining<CreateDepartment>();
+                cfg.RegisterValidatorsFromAssemblyContaining<CreatePosition>();
             });
 
             services.AddControllersWithViews()
