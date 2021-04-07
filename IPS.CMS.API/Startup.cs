@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Companies;
+using Application.Departments;
 using Application.Interfaces;
 using AutoMapper;
 using Domain;
@@ -49,6 +50,8 @@ namespace IPS.CMS.API
 
             services.AddMediatR(typeof(ListCompany.Handler).Assembly);
             services.AddAutoMapper(typeof(ListCompany.Handler));
+            services.AddMediatR(typeof(ListDeprtment.Handler).Assembly);
+            services.AddAutoMapper(typeof(ListDeprtment.Handler));
 
             services.AddSignalR();
             services.AddControllers(opt =>
@@ -59,6 +62,7 @@ namespace IPS.CMS.API
             .AddFluentValidation(cfg =>
             {
                 cfg.RegisterValidatorsFromAssemblyContaining<CreateCompany>();
+                cfg.RegisterValidatorsFromAssemblyContaining<CreateDepartment>();
             });
 
             services.AddControllersWithViews()
