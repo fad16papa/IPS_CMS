@@ -6,11 +6,11 @@ using Application.Errors;
 using MediatR;
 using Persistence;
 
-namespace Application.Companies
+namespace Application.Departments
 {
-    public class EditCompany
+    public class EditDepartment
     {
-        public class CommandEditCompany : IRequest
+        public class CommandEditDepartment : IRequest
         {
             public Guid Id { get; set; }
             public string Name { get; set; }
@@ -19,7 +19,7 @@ namespace Application.Companies
             public bool IsEnable { get; set; }
         }
 
-        public class Handler : IRequestHandler<CommandEditCompany>
+        public class Handler : IRequestHandler<CommandEditDepartment>
         {
             private readonly DataContext _context;
 
@@ -28,19 +28,19 @@ namespace Application.Companies
                 _context = context;
             }
 
-            public async Task<Unit> Handle(CommandEditCompany request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(CommandEditDepartment request, CancellationToken cancellationToken)
             {
                 //logic goes here
-                var company = await _context.Company.FindAsync(request.Id);
+                var department = await _context.Department.FindAsync(request.Id);
 
-                if (company == null)
+                if (department == null)
                 {
                     throw new RestException(HttpStatusCode.NotFound, "Not Found");
                 }
 
-                company.Name = request.Name ?? company.Name;
-                company.Description = request.Description ?? company.Description;
-                company.IsEnable = request.IsEnable;
+                department.Name = request.Name ?? department.Name;
+                department.Description = request.Description ?? department.Description;
+                department.IsEnable = request.IsEnable;
 
                 var success = await _context.SaveChangesAsync() > 0;
 
