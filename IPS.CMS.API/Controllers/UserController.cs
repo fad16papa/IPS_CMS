@@ -19,7 +19,7 @@ namespace IPS.CMS.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(Register.Command command)
+        public async Task<ActionResult<User>> Register(Register.CommandRegisterUser command)
         {
             return await Mediator.Send(command);
         }

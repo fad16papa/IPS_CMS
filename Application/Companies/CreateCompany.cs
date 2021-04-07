@@ -10,7 +10,7 @@ namespace Application.Companies
 {
     public class CreateCompany
     {
-        public class Command : IRequest
+        public class CommandCreateCompany : IRequest
         {
             public Guid Id { get; set; }
             public string Name { get; set; }
@@ -19,7 +19,7 @@ namespace Application.Companies
             public bool IsEnable { get; set; }
         }
 
-        public class CommandValidator : AbstractValidator<Command>
+        public class CommandValidator : AbstractValidator<CommandCreateCompany>
         {
             public CommandValidator()
             {
@@ -29,7 +29,7 @@ namespace Application.Companies
             }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<CommandCreateCompany>
         {
             private readonly DataContext _context;
 
@@ -38,15 +38,15 @@ namespace Application.Companies
                 _context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(CommandCreateCompany request, CancellationToken cancellationToken)
             {
                 //logic goes here
                 var company = new Company()
                 {
                     Id = request.Id,
                     Name = request.Name,
-                    Description = request.Description, 
-                    DateCreated = request.DateCreated, 
+                    Description = request.Description,
+                    DateCreated = request.DateCreated,
                     IsEnable = request.IsEnable
                 };
 

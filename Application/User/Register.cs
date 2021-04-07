@@ -16,7 +16,7 @@ namespace Application.User
 {
     public class Register
     {
-        public class Command : IRequest<User>
+        public class CommandRegisterUser : IRequest<User>
         {
             public string UserName { get; set; }
             public string Email { get; set; }
@@ -24,7 +24,7 @@ namespace Application.User
             public string DisplayName { get; set; }
         }
 
-        public class CommandValidator : AbstractValidator<Command>
+        public class CommandValidator : AbstractValidator<CommandRegisterUser>
         {
             public CommandValidator()
             {
@@ -35,7 +35,7 @@ namespace Application.User
             }
         }
 
-        public class Handler : IRequestHandler<Command, User>
+        public class Handler : IRequestHandler<CommandRegisterUser, User>
         {
             private readonly DataContext _context;
             private readonly UserManager<AppUser> _userManager;
@@ -48,7 +48,7 @@ namespace Application.User
                 _context = context;
             }
 
-            public async Task<User> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<User> Handle(CommandRegisterUser request, CancellationToken cancellationToken)
             {
                 //logic goes here
                 if (await _context.Users.AnyAsync(x => x.Email == request.Email))

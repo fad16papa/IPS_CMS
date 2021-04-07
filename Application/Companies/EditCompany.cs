@@ -10,7 +10,7 @@ namespace Application.Companies
 {
     public class EditCompany
     {
-        public class Command : IRequest
+        public class CommandEditCompany : IRequest
         {
             public Guid Id { get; set; }
             public string Name { get; set; }
@@ -19,7 +19,7 @@ namespace Application.Companies
             public bool IsEnable { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<CommandEditCompany>
         {
             private readonly DataContext _context;
 
@@ -28,7 +28,7 @@ namespace Application.Companies
                 _context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(CommandEditCompany request, CancellationToken cancellationToken)
             {
                 //logic goes here
                 var company = await _context.Company.FindAsync(request.Id);
