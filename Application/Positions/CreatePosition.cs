@@ -12,7 +12,6 @@ namespace Application.Positions
     {
         public class CommandCreatePosition : IRequest
         {
-            public Guid Id { get; set; }
             public string Name { get; set; }
             public string Description { get; set; }
             public DateTime DateCreated { get; set; }
@@ -43,7 +42,6 @@ namespace Application.Positions
                 //logic goes here
                 var position = new Position
                 {
-                    Id = request.Id,
                     Name = request.Name,
                     Description = request.Description,
                     DateCreated = request.DateCreated,

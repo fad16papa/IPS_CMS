@@ -12,7 +12,6 @@ namespace Application.Companies
     {
         public class CommandCreateCompany : IRequest
         {
-            public Guid Id { get; set; }
             public string Name { get; set; }
             public string Description { get; set; }
             public DateTime DateCreated { get; set; }
@@ -43,7 +42,6 @@ namespace Application.Companies
                 //logic goes here
                 var company = new Company()
                 {
-                    Id = request.Id,
                     Name = request.Name,
                     Description = request.Description,
                     DateCreated = request.DateCreated,

@@ -12,7 +12,6 @@ namespace Application.Departments
     {
         public class CommandCreateDepartment : IRequest
         {
-            public Guid Id { get; set; }
             public string Name { get; set; }
             public string Description { get; set; }
             public DateTime DateCreated { get; set; }
@@ -43,7 +42,6 @@ namespace Application.Departments
                 //logic goes here
                 var department = new Department
                 {
-                    Id = request.Id,
                     Name = request.Name,
                     Description = request.Description,
                     DateCreated = request.DateCreated,
