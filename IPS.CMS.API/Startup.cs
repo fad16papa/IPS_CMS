@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Companies;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using FluentValidation.AspNetCore;
 using Infrastructure.Security;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -44,6 +47,9 @@ namespace IPS.CMS.API
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddMediatR(typeof(ListCompany.Handler).Assembly);
+            services.AddAutoMapper(typeof(ListCompany.Handler));
+
             services.AddSignalR();
             services.AddControllers(opt =>
             {
@@ -52,7 +58,7 @@ namespace IPS.CMS.API
             })
             .AddFluentValidation(cfg =>
             {
-
+                cfg.RegisterValidatorsFromAssemblyContaining<CreateCompany>();
             });
 
             services.AddControllersWithViews()
