@@ -22,6 +22,9 @@ namespace Application.User
             public string Email { get; set; }
             public string Password { get; set; }
             public string DisplayName { get; set; }
+            public Guid DepartmentId { get; set; }
+            public Guid PositionId { get; set; }
+            public Guid CompanyId { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<CommandRegisterUser>
@@ -32,6 +35,9 @@ namespace Application.User
                 RuleFor(x => x.Email).NotEmpty().EmailAddress();
                 RuleFor(x => x.Password).Password();
                 RuleFor(x => x.DisplayName).NotEmpty();
+                RuleFor(x => x.DepartmentId).NotEmpty();
+                RuleFor(x => x.PositionId).NotEmpty();
+                RuleFor(x => x.CompanyId).NotEmpty();
             }
         }
 
@@ -66,6 +72,9 @@ namespace Application.User
                     DisplayName = request.DisplayName,
                     Email = request.Email,
                     UserName = request.UserName,
+                    DepartmentId = request.DepartmentId,
+                    PositionId = request.PositionId,
+                    CompanyId = request.CompanyId
                 };
 
                 var result = await _userManager.CreateAsync(user, request.Password);
