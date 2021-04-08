@@ -13,6 +13,7 @@ namespace Application.AssessmentTypes
         public class CommandCreateAssessmentType : IRequest
         {
             public string Name { get; set; }
+            public string Description { get; set; }
             public DateTime DateCreated { get; set; }
             public bool IsEnable { get; set; }
         }
@@ -22,6 +23,7 @@ namespace Application.AssessmentTypes
             public CommandValidator()
             {
                 RuleFor(x => x.Name).NotEmpty();
+                RuleFor(x => x.Description).NotEmpty();
                 RuleFor(x => x.IsEnable).NotEmpty();
             }
         }
@@ -41,6 +43,7 @@ namespace Application.AssessmentTypes
                 var assessmentType = new AssessmentType
                 {
                     Name = request.Name,
+                    Description = request.Description,
                     DateCreated = request.DateCreated,
                     IsEnable = request.IsEnable
                 };
