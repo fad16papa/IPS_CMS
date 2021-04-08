@@ -23,5 +23,13 @@ namespace IPS.CMS.API.Controllers
         {
             return await Mediator.Send(command);
         }
+
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<ActionResult<User>> Login(Login.Query query)
+        {
+            return await Mediator.Send(query);
+        }
+
     }
 }
