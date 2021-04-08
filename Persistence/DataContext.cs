@@ -13,6 +13,8 @@ namespace Persistence
         public DbSet<Company> Company { get; set; }
         public DbSet<Department> Department { get; set; }
         public DbSet<Position> Position { get; set; }
+        public DbSet<AssessmentType> AssessmentType { get; set; }
+        public DbSet<AssessmentQuestion> AssessmentQuestion { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -32,6 +34,11 @@ namespace Persistence
                 .HasOne<Company>(c => c.Company)
                 .WithMany(a => a.AppUser)
                 .HasForeignKey(c => c.CompanyId);
+
+            builder.Entity<AssessmentQuestion>()
+                .HasOne<AssessmentType>(at => at.AssessmentType)
+                .WithMany(aq => aq.AssessmentQuestion)
+                .HasForeignKey(at => at.AssessmentTypeId);
         }
     }
 }
