@@ -6,20 +6,22 @@ using Application.Errors;
 using MediatR;
 using Persistence;
 
-namespace Application.AssessmentTypes
+namespace Application.AssessmentQuestions
 {
-    public class EditAssessmentType
+    public class EditAssessmentQuestion
     {
-        public class CommandEditAssessmentType : IRequest
+        public class Command : IRequest
         {
             public Guid Id { get; set; }
+            public string Question { get; set; }
             public string Name { get; set; }
-            public string Description { get; set; }
+            public Guid AssessmentTypeId { get; set; }
+            public string Points { get; set; }
             public DateTime DateCreated { get; set; }
-            public string IsEnable { get; set; }
+            public bool IsEnable { get; set; }
         }
 
-        public class Handler : IRequestHandler<CommandEditAssessmentType>
+        public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
 
@@ -28,19 +30,20 @@ namespace Application.AssessmentTypes
                 _context = context;
             }
 
-            public async Task<Unit> Handle(CommandEditAssessmentType request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 //logic goes here
-                var assessmentType = await _context.AssessmentType.FindAsync(request.Id);
+                var assessmentQueston = await _context.AssessmentQuestion.FindAsync(request.Id);
 
-                if (assessmentType == null)
+                if (assessmentQueston == null)
                 {
                     throw new RestException(HttpStatusCode.NotFound, "Not Found");
                 }
 
-                assessmentType.Name = request.Name ?? assessmentType.Name;
-                assessmentType.Description = request.Description ?? assessmentType.Description;
-                assessmentType.IsEnable = Convert.ToBoolean(request.IsEnable);
+                assessmentQueston.Name = request.Name ?? assessmentQueston.Name;
+                assessmentQueston.Question = request.Question ?? assessmentQueston.Question;
+                assessmentQueston.Points = Convert.ToInt32(request.Points);
+                assessmentQueston.IsEnable = request.IsEnable;
 
                 var success = await _context.SaveChangesAsync() > 0;
 
