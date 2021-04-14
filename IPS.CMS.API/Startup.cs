@@ -43,12 +43,14 @@ namespace IPS.CMS.API
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddMediatR(typeof(ListCompany.Handler).Assembly);
-            services.AddAutoMapper(typeof(ListCompany.Handler));
-            services.AddMediatR(typeof(ListDeprtment.Handler).Assembly);
-            services.AddAutoMapper(typeof(ListDeprtment.Handler));
-            services.AddMediatR(typeof(ListPosition.Handler).Assembly);
-            services.AddAutoMapper(typeof(ListPosition.Handler));
+            // services.AddMediatR(typeof(ListCompany.Handler).Assembly);
+            // services.AddAutoMapper(typeof(ListCompany.Handler));
+            // services.AddMediatR(typeof(ListDeprtment.Handler).Assembly);
+            // services.AddAutoMapper(typeof(ListDeprtment.Handler));
+            // services.AddMediatR(typeof(ListPosition.Handler).Assembly);
+            // services.AddAutoMapper(typeof(ListPosition.Handler));
+
+            RegisterMapper(services);
 
             services.AddSignalR();
             services.AddControllers(opt =>
@@ -112,6 +114,11 @@ namespace IPS.CMS.API
         private void RegisterServices(IServiceCollection serviceDescriptors)
         {
             DependencyContainer.RegisterServices(serviceDescriptors);
+        }
+
+        private void RegisterMapper(IServiceCollection serviceDescriptors)
+        {
+            MapperContainer.RegisterMapper(serviceDescriptors);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
