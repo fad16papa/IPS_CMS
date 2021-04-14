@@ -11,6 +11,7 @@ using AutoMapper;
 using Domain;
 using FluentValidation.AspNetCore;
 using Infrastructure.Security;
+using IPS.CMS.INFRA.IOC;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -107,13 +108,17 @@ namespace IPS.CMS.API
                     };
                 });
 
-            services.AddScoped<IJwtGenerator, JwtGenerator>();
-            services.AddScoped<IUserAccessor, UserAccessor>();
+            RegisterServices(services);
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IPS.CMS.API", Version = "v1" });
             });
+        }
+
+        private void RegisterServices(IServiceCollection serviceDescriptors)
+        {
+            DependencyContainer.RegisterServices(serviceDescriptors);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
