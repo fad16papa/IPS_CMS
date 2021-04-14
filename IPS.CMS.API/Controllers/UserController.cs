@@ -11,6 +11,7 @@ namespace IPS.CMS.API.Controllers
 {
     public class UserController : BaseController
     {
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<AppUser>>> List()
         {

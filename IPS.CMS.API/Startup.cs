@@ -43,13 +43,6 @@ namespace IPS.CMS.API
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            // services.AddMediatR(typeof(ListCompany.Handler).Assembly);
-            // services.AddAutoMapper(typeof(ListCompany.Handler));
-            // services.AddMediatR(typeof(ListDeprtment.Handler).Assembly);
-            // services.AddAutoMapper(typeof(ListDeprtment.Handler));
-            // services.AddMediatR(typeof(ListPosition.Handler).Assembly);
-            // services.AddAutoMapper(typeof(ListPosition.Handler));
-
             RegisterMapper(services);
 
             services.AddSignalR();
@@ -75,7 +68,7 @@ namespace IPS.CMS.API
             identityBuilder.AddEntityFrameworkStores<DataContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenProperties:TokenKey"]));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
                 {
@@ -83,23 +76,15 @@ namespace IPS.CMS.API
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = key,
-                        ValidateAudience = false,
-                        ValidateIssuer = false,
+
+                        ValidateAudience = true,
+                        ValidAudience = Configuration["TokenProperties:Audiance"],
+
+                        ValidateIssuer = true,
+                        ValidIssuer = Configuration["TokenProperties:Issuer"],
+
                         ValidateLifetime = true,
                         ClockSkew = TimeSpan.Zero
-                    };
-                    opt.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
-                        {
-                            var accessToken = context.Request.Query["access_token"];
-                            var path = context.HttpContext.Request.Path;
-                            if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
-                            {
-                                context.Token = accessToken;
-                            }
-                            return Task.CompletedTask;
-                        }
                     };
                 });
 
