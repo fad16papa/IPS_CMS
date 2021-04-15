@@ -43,7 +43,7 @@ namespace Application.AssessmentQuestions
                 assessmentQueston.Name = request.Name ?? assessmentQueston.Name;
                 assessmentQueston.Question = request.Question ?? assessmentQueston.Question;
                 assessmentQueston.Points = Convert.ToInt32(request.Points);
-                assessmentQueston.IsEnable = request.IsEnable;
+                assessmentQueston.IsEnable = request.IsEnable; 
 
                 var success = await _context.SaveChangesAsync() > 0;
 

@@ -64,7 +64,7 @@ namespace Application.User
 
                 if (await _context.Users.AnyAsync(x => x.UserName == request.UserName))
                 {
-                    throw new RestException(HttpStatusCode.Conflict, string.Format($"Email {request.UserName} already exist."));
+                    throw new RestException(HttpStatusCode.Conflict, string.Format($"UserName {request.UserName} already exist."));
                 }
 
                 var user = new AppUser
@@ -85,13 +85,12 @@ namespace Application.User
                     {
                         DisplayName = user.DisplayName,
                         Token = _jwtGenerator.CreateToken(user),
-                        UserName = user.UserName,
-                        Email = user.Email
+                        UserName = user.UserName
                     };
                 }
                 else
                 {
-                    throw new Exception("Problem saving changes");
+                    throw new Exception("Problem creating user");
                 }
             }
         }

@@ -11,7 +11,7 @@ namespace IPS.CMS.API.Controllers
 {
     public class UserController : BaseController
     {
-        [AllowAnonymous]
+        [Authorize(Roles = ("SuperAdmin"))]
         [HttpGet]
         public async Task<ActionResult<List<AppUser>>> List()
         {
