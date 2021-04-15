@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Errors;
 using Domain;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
@@ -14,6 +15,16 @@ namespace Application.UserRole
         public class CommandCreateUserRole : IRequest
         {
             public AppUserRole AppUserRole { get; set; }
+        }
+
+        public class CommandValidator : AbstractValidator<CommandCreateUserRole>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.AppUserRole.Name).NotEmpty();
+                RuleFor(x => x.AppUserRole.DateCreated).NotEmpty();
+                RuleFor(x => x.AppUserRole.IsEnable).NotEmpty();
+            }
         }
 
         public class Handler : IRequestHandler<CommandCreateUserRole>
