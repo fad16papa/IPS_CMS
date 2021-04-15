@@ -32,7 +32,7 @@ namespace Application.UserRole
 
                 if (check)
                 {
-                    throw new RestException(HttpStatusCode.Conflict, string.Format("The role name{0} is already created", request.AppUserRole.Name));
+                    throw new RestException(HttpStatusCode.Conflict, string.Format("The role name {0} is already created", request.AppUserRole.Name));
                 }
 
                 var result = await _roleManager.CreateAsync(request.AppUserRole);
