@@ -63,30 +63,32 @@ namespace IPS.CMS.API
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
-            var builder = services.AddIdentityCore<AppUser>();
-            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
-            identityBuilder.AddEntityFrameworkStores<DataContext>();
-            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+            // var builder = services.AddIdentityCore<AppUser>();
+            // var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            // identityBuilder.AddEntityFrameworkStores<DataContext>();
+            // identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenProperties:TokenKey"]));
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(opt =>
-                {
-                    opt.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = key,
+            // var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenProperties:TokenKey"]));
+            // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //     .AddJwtBearer(opt =>
+            //     {
+            //         opt.TokenValidationParameters = new TokenValidationParameters
+            //         {
+            //             ValidateIssuerSigningKey = true,
+            //             IssuerSigningKey = key,
 
-                        ValidateAudience = true,
-                        ValidAudience = Configuration["TokenProperties:Audiance"],
+            //             ValidateAudience = true,
+            //             ValidAudience = Configuration["TokenProperties:Audiance"],
 
-                        ValidateIssuer = true,
-                        ValidIssuer = Configuration["TokenProperties:Issuer"],
+            //             ValidateIssuer = true,
+            //             ValidIssuer = Configuration["TokenProperties:Issuer"],
 
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.Zero
-                    };
-                });
+            //             ValidateLifetime = true,
+            //             ClockSkew = TimeSpan.Zero
+            //         };
+            //     });
+
+            RegisterIdentity(services, Configuration);
 
             RegisterServices(services);
 
@@ -94,6 +96,11 @@ namespace IPS.CMS.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IPS.CMS.API", Version = "v1" });
             });
+        }
+
+        private void RegisterIdentity(IServiceCollection serviceDescriptors, IConfiguration Configuration)
+        {
+            IdentityContainer.RegisterIdentity(serviceDescriptors, Configuration);
         }
 
         private void RegisterServices(IServiceCollection serviceDescriptors)
