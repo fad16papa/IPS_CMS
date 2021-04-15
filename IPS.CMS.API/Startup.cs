@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Application.Companies;
 using Application.Departments;
 using Application.Positions;
+using Application.UserRole;
 using AutoMapper;
 using Domain;
 using FluentValidation.AspNetCore;
@@ -23,6 +24,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
+using static Application.User.Register;
 
 namespace IPS.CMS.API
 {
@@ -57,6 +59,7 @@ namespace IPS.CMS.API
                 cfg.RegisterValidatorsFromAssemblyContaining<CreateCompany>();
                 cfg.RegisterValidatorsFromAssemblyContaining<CreateDepartment>();
                 cfg.RegisterValidatorsFromAssemblyContaining<CreatePosition>();
+                cfg.RegisterValidatorsFromAssemblyContaining<CreateUserRole>();
             });
 
             services.AddControllersWithViews()

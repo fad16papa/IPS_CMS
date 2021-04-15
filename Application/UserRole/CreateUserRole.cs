@@ -14,16 +14,18 @@ namespace Application.UserRole
     {
         public class CommandCreateUserRole : IRequest
         {
-            public AppUserRole AppUserRole { get; set; }
+            public string Name { get; set; }
+            public DateTime DateCreated { get; set; }
+            public bool IsEnable { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<CommandCreateUserRole>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.AppUserRole.Name).NotEmpty();
-                RuleFor(x => x.AppUserRole.DateCreated).NotEmpty();
-                RuleFor(x => x.AppUserRole.IsEnable).NotEmpty();
+                RuleFor(x => x.Name).NotEmpty();
+                RuleFor(x => x.DateCreated).NotEmpty();
+                RuleFor(x => x.IsEnable).NotEmpty();
             }
         }
 
@@ -39,14 +41,21 @@ namespace Application.UserRole
             public async Task<Unit> Handle(CommandCreateUserRole request, CancellationToken cancellationToken)
             {
                 //logic goes here
-                bool check = await _roleManager.RoleExistsAsync(request.AppUserRole.Name);
+                bool check = await _roleManager.RoleExistsAsync(request.Name);
 
                 if (check)
                 {
-                    throw new RestException(HttpStatusCode.Conflict, string.Format("The role name {0} is already created", request.AppUserRole.Name));
+                    throw new RestException(HttpStatusCode.Conflict, string.Format("The role name {0} is already created", request.Name));
                 }
 
-                var result = await _roleManager.CreateAsync(request.AppUserRole);
+                var appUserRole = new AppUserRole
+                {
+                    Name = request.Name,
+                    DateCreated = request.DateCreated,
+                    IsEnable = request.IsEnable
+                };
+
+                var result = await _roleManager.CreateAsync(appUserRole);
 
                 if (result.Succeeded)
                 {
