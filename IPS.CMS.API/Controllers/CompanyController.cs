@@ -11,28 +11,28 @@ namespace IPS.CMS.API.Controllers
 {
     public class CompanyController : BaseController
     {
-        [AllowAnonymous]
+        [Authorize(Roles = ("SuperAdmin"))]
         [HttpGet]
         public async Task<ActionResult<List<Company>>> List()
         {
             return await Mediator.Send(new ListCompany.Query());
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = ("SuperAdmin"))]
         [HttpGet("{id}")]
         public async Task<ActionResult<Company>> Details(Guid id)
         {
             return await Mediator.Send(new DetailsCompany.Query { Id = id });
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = ("SuperAdmin"))]
         [HttpPost]
         public async Task<ActionResult<Unit>> Create(CreateCompany.CommandCreateCompany command)
         {
             return await Mediator.Send(command);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = ("SuperAdmin"))]
         [HttpPut("{id}")]
         public async Task<ActionResult<Unit>> Edit(Guid id, EditCompany.CommandEditCompany command)
         {
