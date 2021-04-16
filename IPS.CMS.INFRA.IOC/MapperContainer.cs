@@ -1,6 +1,7 @@
 using Application.Companies;
 using Application.Departments;
 using Application.Positions;
+using Application.UserRole;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,8 @@ namespace IPS.CMS.INFRA.IOC
             serviceDescriptors.AddAutoMapper(typeof(ListDeprtment.Handler));
             serviceDescriptors.AddMediatR(typeof(ListPosition.Handler).Assembly);
             serviceDescriptors.AddAutoMapper(typeof(ListPosition.Handler));
+            serviceDescriptors.AddMediatR(typeof(ListRole.Handler).Assembly);
+            serviceDescriptors.AddAutoMapper(typeof(ListRole.Handler));
         }
     }
 }

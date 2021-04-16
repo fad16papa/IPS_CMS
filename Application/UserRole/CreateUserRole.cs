@@ -1,18 +1,23 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Errors;
+using Application.Interfaces;
+using Application.Validators;
 using Domain;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Persistence;
 
 namespace Application.UserRole
 {
     public class CreateUserRole
     {
-        public class CommandCreateUserRole : IRequest
+        public class CommandCreateUserRole : IRequest<Role>
         {
             public string Name { get; set; }
             public DateTime DateCreated { get; set; }
@@ -29,7 +34,7 @@ namespace Application.UserRole
             }
         }
 
-        public class Handler : IRequestHandler<CommandCreateUserRole>
+        public class Handler : IRequestHandler<CommandCreateUserRole, Role>
         {
             private readonly RoleManager<AppUserRole> _roleManager;
 
@@ -38,7 +43,7 @@ namespace Application.UserRole
                 _roleManager = roleManager;
             }
 
-            public async Task<Unit> Handle(CommandCreateUserRole request, CancellationToken cancellationToken)
+            public async Task<Role> Handle(CommandCreateUserRole request, CancellationToken cancellationToken)
             {
                 //logic goes here
                 bool check = await _roleManager.RoleExistsAsync(request.Name);
@@ -59,7 +64,12 @@ namespace Application.UserRole
 
                 if (result.Succeeded)
                 {
-                    return Unit.Value;
+                    return new Role
+                    {
+                        Name = appUserRole.Name,
+                        DateCreated = appUserRole.DateCreated,
+                        IsEnable = appUserRole.IsEnable
+                    };
                 }
                 else
                 {
