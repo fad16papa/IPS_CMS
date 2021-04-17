@@ -43,7 +43,8 @@ namespace IPS.CMS.API
             services.AddDbContext<DataContext>(opt =>
             {
                 opt.UseLazyLoadingProxies();
-                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                //opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                opt.UseMySql(Configuration.GetConnectionString("ConnectionStringsMySql"));
             });
 
             RegisterMapper(services);
