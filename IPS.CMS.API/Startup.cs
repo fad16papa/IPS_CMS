@@ -24,7 +24,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistence;
-using static Application.User.Register;
 
 namespace IPS.CMS.API
 {
@@ -43,8 +42,8 @@ namespace IPS.CMS.API
             services.AddDbContext<DataContext>(opt =>
             {
                 opt.UseLazyLoadingProxies();
-                //opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-                opt.UseMySql(Configuration.GetConnectionString("ConnectionStringsMySql"));
+                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                //opt.UseMySql(Configuration.GetConnectionString("ConnectionStringsMySql"));
             });
 
             RegisterMapper(services);

@@ -1,3 +1,4 @@
+using System.Reflection;
 using Application.Companies;
 using Application.Departments;
 using Application.Positions;
@@ -8,9 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IPS.CMS.INFRA.IOC
 {
-    public class MapperContainer
+    public static class MapperContainer
     {
-        public static void RegisterMapper(IServiceCollection serviceDescriptors)
+        public static IServiceCollection RegisterMapper(IServiceCollection serviceDescriptors)
         {
             serviceDescriptors.AddMediatR(typeof(ListCompany.Handler).Assembly);
             serviceDescriptors.AddAutoMapper(typeof(ListCompany.Handler));
@@ -20,6 +21,10 @@ namespace IPS.CMS.INFRA.IOC
             serviceDescriptors.AddAutoMapper(typeof(ListPosition.Handler));
             serviceDescriptors.AddMediatR(typeof(ListRole.Handler).Assembly);
             serviceDescriptors.AddAutoMapper(typeof(ListRole.Handler));
+            serviceDescriptors.AddAutoMapper(Assembly.GetExecutingAssembly());
+            serviceDescriptors.AddMediatR(Assembly.GetExecutingAssembly());
+
+            return serviceDescriptors;
         }
     }
 }
